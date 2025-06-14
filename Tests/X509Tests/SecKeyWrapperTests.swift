@@ -14,11 +14,11 @@
 
 import XCTest
 @_spi(Testing) @testable import X509
-#if canImport(Darwin)
+#if CRYPTOKIT
 @preconcurrency import Security
 #endif
 
-#if canImport(Darwin)
+#if CRYPTOKIT
 final class SecKeyWrapperTests: XCTestCase {
     struct CandidateKey {
         let key: SecKey

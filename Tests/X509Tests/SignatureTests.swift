@@ -17,7 +17,7 @@ import XCTest
 import _CryptoExtras
 import SwiftASN1
 @testable import X509
-#if canImport(Darwin)
+#if CRYPTOKIT
 @preconcurrency import Security
 #endif
 
@@ -31,7 +31,7 @@ final class SignatureTests: XCTestCase {
     static let p521Key = P521.Signing.PrivateKey()
     static let rsaKey = try! _RSA.Signing.PrivateKey(keySize: .bits2048)
     static let ed25519Key = Curve25519.Signing.PrivateKey()
-    #if canImport(Darwin)
+    #if CRYPTOKIT
     static let secureEnclaveP256 = try? SecureEnclave.P256.Signing.PrivateKey()
     static let secKeyRSA = try? generateSecKey(keyType: kSecAttrKeyTypeRSA, keySize: 2048, useSEP: false)
     static let secKeyEC256 = try? generateSecKey(keyType: kSecAttrKeyTypeECSECPrimeRandom, keySize: 256, useSEP: false)
@@ -432,7 +432,7 @@ final class SignatureTests: XCTestCase {
         )
     }
 
-    #if canImport(Darwin)
+    #if CRYPTOKIT
     static func generateSecKey(keyType: CFString, keySize: Int, useSEP: Bool) throws -> SecKey {
         let access = SecAccessControlCreateWithFlags(
             kCFAllocatorDefault,

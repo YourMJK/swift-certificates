@@ -16,6 +16,17 @@
 import PackageDescription
 import class Foundation.ProcessInfo
 
+let cryptoKitFeatures = false
+
+let swiftSettings: [SwiftSetting]
+if cryptoKitFeatures {
+    swiftSettings = [
+        .define("CRYPTOKIT"),
+    ]
+} else {
+    swiftSettings = []
+}
+
 let package = Package(
     name: "swift-certificates",
     products: [
@@ -35,7 +46,8 @@ let package = Package(
             ],
             exclude: [
                 "CMakeLists.txt"
-            ]
+            ],
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "X509Tests",
@@ -53,7 +65,8 @@ let package = Package(
                 .copy("PEMTestRSACertificate.pem"),
                 .copy("CSR Vectors/"),
                 .copy("ca-certificates.crt"),
-            ]
+            ],
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "_CertificateInternals",
